@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">e-Voting</string>
+    <string name="USER_KEY">"USER_NIK"</string>
+    <string name="PREF_KEY">"USER_PREF"</string>
+</resources>

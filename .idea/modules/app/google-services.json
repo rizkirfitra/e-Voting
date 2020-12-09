@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "442146755993",
+    "project_id": "e-voting-78972",
+    "storage_bucket": "e-voting-78972.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442146755993:android:18a63ca4b7addfeeb86f08",
+        "android_client_info": {
+          "package_name": "com.ikriz.e_voting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "442146755993-gnfjspr4fq859h84psp0fopp1ldibblg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ikriz.e_voting",
+            "certificate_hash": "3ed7f02410f1d125000bb2f1b972391aaca9da63"
+          }
+        },
+        {
+          "client_id": "442146755993-v1bipgg17m5mvei37g2eisu69tgggcos.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBLhv38V5OkmzIddOPWV4krYnV1fsqtvg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "442146755993-v1bipgg17m5mvei37g2eisu69tgggcos.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

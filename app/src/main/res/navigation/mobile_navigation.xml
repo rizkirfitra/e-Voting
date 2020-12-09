@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_status">
+
+    <fragment
+        android:id="@+id/navigation_status"
+        android:name="com.ikriz.e_voting.ui.status.StatusFragment"
+        android:label="Status"
+        tools:layout="@layout/fragment_status" />
+
+    <fragment
+        android:id="@+id/navigation_voting"
+        android:name="com.ikriz.e_voting.ui.voting.VotingFragment"
+        android:label="Voting"
+        tools:layout="@layout/fragment_voting" />
+
+    <fragment
+        android:id="@+id/navigation_help"
+        android:name="com.ikriz.e_voting.ui.help.HelpFragment"
+        android:label="Bantuan"
+        tools:layout="@layout/fragment_help" />
+</navigation>
