@@ -36,20 +36,17 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:gravity="center"
                 android:layout_marginBottom="18dp"
+                android:gravity="center"
                 android:text="Diagram"
                 android:textAppearance="?attr/textAppearanceHeadline6" />
 
-            <org.eazegraph.lib.charts.PieChart
+            <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/chart"
-                android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_below="@id/tv_diagram"
-                app:egLegendTextSize="18sp"
-                app:egUsePieRotation="true"
-                app:egValueTextSize="36sp" />
+                android:layout_centerHorizontal="true" />
 
         </RelativeLayout>
 
