@@ -32,27 +32,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:gravity="center"
+                android:layout_marginBottom="18dp"
                 android:text="Diagram"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                 />
+                android:textAppearance="?attr/textAppearanceHeadline6" />
 
-            <com.anychart.AnyChartView
+            <org.eazegraph.lib.charts.PieChart
                 android:id="@+id/chart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_diagram"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true" />
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
+                android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="300dp"
                 android:layout_below="@id/tv_diagram"
-                android:layout_centerInParent="true" />
+                app:egLegendTextSize="18sp"
+                app:egUsePieRotation="true"
+                app:egValueTextSize="36sp" />
 
         </RelativeLayout>
 
