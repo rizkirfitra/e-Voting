@@ -8,18 +8,18 @@
     <fragment
         android:id="@+id/navigation_status"
         android:name="com.ikriz.e_voting.ui.status.StatusFragment"
-        android:label="Status"
+        android:label=""
         tools:layout="@layout/fragment_status" />
 
     <fragment
         android:id="@+id/navigation_voting"
         android:name="com.ikriz.e_voting.ui.voting.VotingFragment"
-        android:label="Voting"
+        android:label=""
         tools:layout="@layout/fragment_voting" />
 
     <fragment
         android:id="@+id/navigation_help"
         android:name="com.ikriz.e_voting.ui.help.HelpFragment"
-        android:label="Bantuan"
+        android:label=""
         tools:layout="@layout/fragment_help" />
 </navigation>

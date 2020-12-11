@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.elevation = 0F
+        supportActionBar?.title = ""
 
         setNoInternetDialog()
 

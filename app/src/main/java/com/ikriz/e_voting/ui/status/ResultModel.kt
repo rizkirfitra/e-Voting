@@ -1,6 +1,6 @@
 package com.ikriz.e_voting.ui.status
 
-data class StatusModel(
+data class ResultModel(
     val paslon: String = "",
-    val voter: Int = 0
+    val suara: Int = 0
 )
