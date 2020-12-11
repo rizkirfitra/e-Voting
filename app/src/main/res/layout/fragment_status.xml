@@ -13,6 +13,7 @@
         android:background="@color/colorPrimary" />
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -24,7 +25,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:padding="18dp">
 
             <TextView
@@ -38,7 +38,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginBottom="18dp"
                 android:gravity="center"
-                android:text="Diagram"
+                android:text="Diagram Quick Count"
                 android:textAppearance="?attr/textAppearanceHeadline6" />
 
             <com.github.mikephil.charting.charts.PieChart
@@ -47,6 +47,15 @@
                 android:layout_height="300dp"
                 android:layout_below="@id/tv_diagram"
                 android:layout_centerHorizontal="true" />
+
+            <Button
+                android:id="@+id/btn_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/chart"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_status_24dp" />
 
         </RelativeLayout>
 
