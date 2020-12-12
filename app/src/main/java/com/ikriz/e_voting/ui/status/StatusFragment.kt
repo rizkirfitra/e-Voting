@@ -50,7 +50,7 @@ class StatusFragment : Fragment() {
             pieChart.apply {
                 setEntryLabelTextSize(12f)
                 setUsePercentValues(true)
-                description.text = "*tap untuk memperbaharui data"
+                description.text = "*diperbaharui otomatis"
                 isDrawHoleEnabled = false
                 setTouchEnabled(false)
                 data = pieData
