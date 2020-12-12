@@ -19,26 +19,21 @@ class Profile : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile)
-        supportActionBar?.elevation= 0F
+        supportActionBar?.elevation = 0F
 
         sharedPref = getSharedPreferences(R.string.PREF_KEY.toString(), Context.MODE_PRIVATE)
-        val user = sharedPref.getString(R.string.USER_KEY.toString(),null)
+        val user = sharedPref.getString(R.string.USER_KEY.toString(), null)
         db = Firebase.firestore
 
-        user?.let {
-            db.collection("Users").document(it).get().addOnSuccessListener { doc ->
-                if (doc != null) {
-                    nama.text = doc.get("nama").toString()
-                    nik.text = user
-                    telepon.text = doc.get("telepon").toString()
-                    alamat.text = doc.get("alamat").toString()
-                } else {
-                    nama.text = "-"
-                    nik.text = "-"
-                    telepon.text = "-"
-                    alamat.text = "-"
-                }
+        db.collection("Users").document(user!!).addSnapshotListener { value, error ->
+            if (error != null) {
+                Log.w("SNAPSHOT", "listen:error", error)
+                return@addSnapshotListener
             }
+            nama.text = value!!.get("nama").toString()
+            nik.text = user
+            telepon.text = value.get("telepon").toString()
+            alamat.text = value.get("alamat").toString()
         }
 
         btn_logout.setOnClickListener {
@@ -47,7 +42,7 @@ class Profile : AppCompatActivity() {
                 apply()
             }
             startActivity(Intent(this, Login::class.java))
-            setResult(RESULT_OK, null);
+            setResult(RESULT_OK, null)
             db.clearPersistence()
             finish()
         }

@@ -3,21 +3,19 @@ package com.ikriz.e_voting
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
+import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.no_internet.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,18 +26,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.elevation = 0F
-        supportActionBar?.title = ""
 
         setNoInternetDialog()
-
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_status,
-                R.id.navigation_voting,
-                R.id.navigation_help
-            )
+            setOf(R.id.navigation_status, R.id.navigation_voting, R.id.navigation_help)
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -63,7 +55,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        internetDisposable = ReactiveNetwork.observeInternetConnectivity()
+        val setting = InternetObservingSettings.builder().interval(10000).build()
+        internetDisposable = ReactiveNetwork.observeInternetConnectivity(setting)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { isConnectedToInternet ->
@@ -72,32 +65,28 @@ class MainActivity : AppCompatActivity() {
                     false -> noInternetDialog.show()
                 }
             }
-        Log.d("observe_running", internetDisposable.toString())
     }
 
     override fun onPause() {
         super.onPause()
         safelyDispose(internetDisposable)
-        Log.d("observe_pause", internetDisposable.toString())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RESULT_CANCELED) {
-            if (resultCode == RESULT_OK) {
-                this.finish()
-            }
-        }
+        if (requestCode == RESULT_CANCELED && resultCode == RESULT_OK) this.finish()
     }
 
     private fun setNoInternetDialog() {
         noInternetDialog = Dialog(this, android.R.style.Theme)
+        noInternetDialog.setCancelable(false)
         noInternetDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         noInternetDialog.setContentView(R.layout.no_internet)
         noInternetDialog.window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT
         )
+        noInternetDialog.btn_try_again.visibility = View.GONE
     }
 
     private fun safelyDispose(disposable: Disposable?) {
@@ -105,5 +94,4 @@ class MainActivity : AppCompatActivity() {
             disposable.dispose()
         }
     }
-
 }

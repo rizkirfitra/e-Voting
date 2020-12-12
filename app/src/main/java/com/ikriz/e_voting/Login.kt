@@ -10,6 +10,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,12 +20,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.login.*
+import kotlinx.android.synthetic.main.no_internet.*
 
 class Login : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
     private lateinit var sharedPref: SharedPreferences
     private lateinit var noInternetDialog: Dialog
+    private val single = ReactiveNetwork.checkInternetConnectivity()
     private var internetDisposable: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,26 +36,15 @@ class Login : AppCompatActivity() {
         supportActionBar?.hide()
         sharedPref = getSharedPreferences(R.string.PREF_KEY.toString(), Context.MODE_PRIVATE)
         db = Firebase.firestore
-
         setNoInternetDialog()
-
-        btn_login.setOnClickListener {
-            doLogin()
-        }
+        btn_login.setOnClickListener { checkInternetOnce(true) }
+        btn_forget.setOnClickListener { showDialogForget() }
     }
 
     override fun onResume() {
         super.onResume()
-        updateUI(sharedPref.getString(R.string.USER_KEY.toString(), "ONCE"))
-        internetDisposable = ReactiveNetwork.observeInternetConnectivity()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { isConnectedToInternet ->
-                when (isConnectedToInternet) {
-                    true -> noInternetDialog.dismiss()
-                    false -> noInternetDialog.show()
-                }
-            }
+        updateUI(sharedPref.getString(R.string.USER_KEY.toString(), "FIRST"))
+        checkInternetOnce(false)
     }
 
     override fun onPause() {
@@ -83,8 +75,7 @@ class Login : AppCompatActivity() {
             et_token.error = null
         }
 
-        val users = db.collection("Users")
-        users.document(nik).get().addOnSuccessListener { doc ->
+        db.collection("Users").document(nik).get().addOnSuccessListener { doc ->
             if (doc.get("token") != null) {
                 if (doc.get("token") == token) {
                     with(sharedPref.edit()) {
@@ -106,14 +97,12 @@ class Login : AppCompatActivity() {
     }
 
     private fun updateUI(currentUser: String?) {
-        if (currentUser == "ONCE") return
+        if (currentUser == "FIRST") return
         if (currentUser != null) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         } else {
-            Toast.makeText(
-                baseContext, "Login gagal", Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(baseContext, "Login gagal", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -125,11 +114,39 @@ class Login : AppCompatActivity() {
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT
         )
+        noInternetDialog.btn_try_again.setOnClickListener {
+            noInternetDialog.dismiss()
+        }
     }
 
     private fun safelyDispose(disposable: Disposable?) {
         if (disposable != null && !disposable.isDisposed) {
             disposable.dispose()
         }
+    }
+
+    private fun showDialogForget() {
+        AlertDialog.Builder(this).apply {
+            setTitle("Lupa token")
+            setMessage("Silahkan hubungi RT/RW atau pemerintah setempat")
+            setNegativeButton("OK") { dialog, _ ->
+                dialog.cancel()
+            }
+            create()
+        }.show()
+    }
+
+    private fun checkInternetOnce(doLogin: Boolean) {
+        internetDisposable = single.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { isConnectedToInternet ->
+                when (isConnectedToInternet) {
+                    true -> {
+                        noInternetDialog.dismiss()
+                        if (doLogin) doLogin()
+                    }
+                    false -> noInternetDialog.show()
+                }
+            }
     }
 }

@@ -29,6 +29,7 @@
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginVertical="24dp"
                 android:text="Status perhitungan suara"
+                android:textStyle="bold"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                 android:textColor="@android:color/white" />
 
@@ -162,7 +163,6 @@
                             android:text="0 suara"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
                     </LinearLayout>
-
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

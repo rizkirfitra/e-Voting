@@ -3,10 +3,10 @@ package com.ikriz.e_voting.ui.status
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.fragment_status.view.*
 class StatusFragment : Fragment() {
 
     private lateinit var statusViewModel: StatusViewModel
-    private var lastClickTime:Long = 0
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -34,7 +33,12 @@ class StatusFragment : Fragment() {
         val pieChart = root.chart
         statusViewModel = ViewModelProvider(this).get(StatusViewModel::class.java)
 
-        statusViewModel.getPieChart().observe(viewLifecycleOwner, Observer {
+        statusViewModel.dataPieChart.observe(viewLifecycleOwner, Observer {
+            for (paslon in it) when (paslon.label) {
+                "Paslon 1" -> root.suara1.text = "${paslon.value.toInt()} suara"
+                "Paslon 2" -> root.suara2.text = "${paslon.value.toInt()} suara"
+                "Paslon 3" -> root.suara3.text = "${paslon.value.toInt()} suara"
+            }
             val pieDataSet = PieDataSet(it, "").apply {
                 colors = ColorTemplate.createColors(ColorTemplate.MATERIAL_COLORS)
             }
@@ -48,25 +52,11 @@ class StatusFragment : Fragment() {
                 setUsePercentValues(true)
                 description.text = "*tap untuk memperbaharui data"
                 isDrawHoleEnabled = false
-                animateXY(750, 750, EaseOutCirc)
                 setTouchEnabled(false)
+                data = pieData
             }
-            pieChart.data = pieData
             pieChart.invalidate()
         })
-
-        statusViewModel.getResult().observe(viewLifecycleOwner, Observer {
-            root.suara1.text = "${it[0]} suara"
-            root.suara2.text = "${it[1]} suara"
-            root.suara3.text = "${it[2]} suara"
-        })
-
-        pieChart.setOnClickListener {
-            if (SystemClock.elapsedRealtime() - lastClickTime < 3000) return@setOnClickListener
-            lastClickTime = SystemClock.elapsedRealtime()
-            statusViewModel.refresh()
-        }
         return root
     }
-
 }

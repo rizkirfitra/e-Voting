@@ -146,9 +146,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Keluar" />
-
         </LinearLayout>
-
     </com.google.android.material.card.MaterialCardView>
-
 </RelativeLayout>
