@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.mikephil.charting.data.PieEntry
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -15,24 +16,26 @@ class StatusViewModel : ViewModel() {
     val dataPieChart: LiveData<ArrayList<PieEntry>> = listPaslon
 
     init {
-        db.collection("Users").addSnapshotListener { value, error ->
-            if (error != null) {
-                Log.w("SNAPSHOT", "Listen failed.", error)
-                return@addSnapshotListener
+        val voices = mutableMapOf<String, Int>()
+        val data = arrayListOf<PieEntry>()
+        db.collection("Voices").addSnapshotListener { docs, _ ->
+            db.collection("Candidates").addSnapshotListener { candidates, _ ->
+                for (candidate in candidates!!) {
+                    voices[candidate.id] = 0
+                }
+                for (doc in docs!!) for (key in voices.keys) if (doc["vote"].toString() == key) {
+                    voices[key] = voices[key]!! + 1
+                }
+                data.clear()
+                for (voice in voices) for (candidate in candidates) if (voice.key == candidate.id) {
+                    data.add(
+                        PieEntry(
+                            voice.value.toFloat(), candidate.get("nama").toString()
+                        )
+                    )
+                }
+                listPaslon.value = data
             }
-            var suara1 = 0
-            var suara2 = 0
-            var suara3 = 0
-            for (doc in value!!) when (doc.get("vote")) {
-                "1" -> suara1 += 1
-                "2" -> suara2 += 1
-                "3" -> suara3 += 1
-            }
-            listPaslon.value = arrayListOf(
-                PieEntry(suara1.toFloat(), "Paslon 1"),
-                PieEntry(suara2.toFloat(), "Paslon 2"),
-                PieEntry(suara3.toFloat(), "Paslon 3")
-            )
         }
     }
 }

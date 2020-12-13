@@ -6,17 +6,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.github.mikephil.charting.animation.Easing.EaseOutCirc
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.ikriz.e_voting.R
+import kotlinx.android.synthetic.main.fragment_status.*
 import kotlinx.android.synthetic.main.fragment_status.view.*
+import kotlinx.android.synthetic.main.list_rincian.view.*
 
 
 class StatusFragment : Fragment() {
@@ -34,10 +36,26 @@ class StatusFragment : Fragment() {
         statusViewModel = ViewModelProvider(this).get(StatusViewModel::class.java)
 
         statusViewModel.dataPieChart.observe(viewLifecycleOwner, Observer {
-            for (paslon in it) when (paslon.label) {
-                "Paslon 1" -> root.suara1.text = "${paslon.value.toInt()} suara"
-                "Paslon 2" -> root.suara2.text = "${paslon.value.toInt()} suara"
-                "Paslon 3" -> root.suara3.text = "${paslon.value.toInt()} suara"
+            class MyViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
+                RecyclerView.ViewHolder(inflater.inflate(R.layout.list_rincian, parent, false)) {
+                var paslon = itemView.paslon
+                var suara = itemView.suara
+            }
+
+            recycler_rincian.apply {
+                layoutManager = LinearLayoutManager(requireActivity())
+                adapter = object : RecyclerView.Adapter<MyViewHolder>() {
+                    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+                        return MyViewHolder(inflater, parent)
+                    }
+
+                    override fun getItemCount(): Int = it.size
+
+                    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+                        holder.paslon.text = it[position].label
+                        holder.suara.text = it[position].value.toInt().toString() + " suara"
+                    }
+                }
             }
             val pieDataSet = PieDataSet(it, "").apply {
                 colors = ColorTemplate.createColors(ColorTemplate.MATERIAL_COLORS)

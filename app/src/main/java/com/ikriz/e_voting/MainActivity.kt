@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        navView.animation = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

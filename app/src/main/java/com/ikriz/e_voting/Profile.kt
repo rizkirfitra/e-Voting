@@ -5,8 +5,11 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ServerTimestamp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.profile.*
@@ -45,6 +48,12 @@ class Profile : AppCompatActivity() {
             setResult(RESULT_OK, null)
             db.clearPersistence()
             finish()
+        }
+
+        btn_edit.setOnClickListener {
+            db.collection("Voices").addSnapshotListener { value, _ ->
+                Toast.makeText(this,value!!.size().toString(),Toast.LENGTH_LONG).show()
+            }
         }
     }
 }
