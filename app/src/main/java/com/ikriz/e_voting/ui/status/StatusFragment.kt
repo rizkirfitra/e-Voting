@@ -16,7 +16,6 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.ikriz.e_voting.R
-import kotlinx.android.synthetic.main.fragment_status.*
 import kotlinx.android.synthetic.main.fragment_status.view.*
 import kotlinx.android.synthetic.main.list_rincian.view.*
 
@@ -25,7 +24,6 @@ class StatusFragment : Fragment() {
 
     private lateinit var statusViewModel: StatusViewModel
 
-    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,8 +39,7 @@ class StatusFragment : Fragment() {
                 var paslon = itemView.paslon
                 var suara = itemView.suara
             }
-
-            recycler_rincian.apply {
+            root.recycler_rincian.apply {
                 layoutManager = LinearLayoutManager(requireActivity())
                 adapter = object : RecyclerView.Adapter<MyViewHolder>() {
                     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -51,6 +48,7 @@ class StatusFragment : Fragment() {
 
                     override fun getItemCount(): Int = it.size
 
+                    @SuppressLint("SetTextI18n")
                     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
                         holder.paslon.text = it[position].label
                         holder.suara.text = it[position].value.toInt().toString() + " suara"

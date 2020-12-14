@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.account -> {
-                this.startActivityForResult(Intent(this, Profile::class.java), RESULT_CANCELED)
+                startActivityForResult(Intent(this, Profile::class.java), 11)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RESULT_CANCELED && resultCode == RESULT_OK) this.finish()
+        if (requestCode == 11 && resultCode == RESULT_OK) this.finish()
     }
 
     private fun setNoInternetDialog() {

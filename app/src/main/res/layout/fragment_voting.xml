@@ -28,10 +28,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginVertical="24dp"
-                android:textStyle="bold"
                 android:text="Ayo gunakan hak suaramu!"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardview2"
@@ -74,9 +74,10 @@
                 app:cardCornerRadius="12dp"
                 app:cardElevation="5dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:padding="18dp">
 
                     <TextView
@@ -85,96 +86,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="18dp"
                         android:text="Vote Di sini"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                        app:layout_constraintBottom_toTopOf="@id/btn_vote1"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
-                    <TextView
-                        android:id="@+id/paslon1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pasangan Calon 1"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                        app:layout_constraintBottom_toBottomOf="@+id/btn_vote1"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/btn_vote1" />
-
-                    <TextView
-                        android:id="@+id/paslon2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pasangan Calon 2"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                        app:layout_constraintBottom_toBottomOf="@+id/btn_vote2"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/btn_vote2" />
-
-                    <TextView
-                        android:id="@+id/paslon3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pasangan Calon 3"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                        app:layout_constraintBottom_toBottomOf="@+id/btn_vote3"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/btn_vote3" />
-
-                    <Button
-                        android:id="@+id/btn_vote1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:text="vote"
-                        app:layout_constraintBottom_toTopOf="@+id/view12"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/title" />
-
-                    <View
-                        android:id="@+id/view12"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_vote"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="6dp"
-                        android:alpha="0.1"
-                        android:background="@android:color/black"
-                        app:layout_constraintBottom_toTopOf="@id/btn_vote2"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/btn_vote1" />
+                        android:layout_height="wrap_content"/>
 
-                    <Button
-                        android:id="@+id/btn_vote2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:text="vote"
-                        app:layout_constraintBottom_toTopOf="@+id/view12"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view23" />
-
-                    <View
-                        android:id="@+id/view23"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="6dp"
-                        android:alpha="0.1"
-                        android:background="@android:color/black"
-                        app:layout_constraintBottom_toTopOf="@id/btn_vote3"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/btn_vote2" />
-
-                    <Button
-                        android:id="@+id/btn_vote3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:text="vote"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view23" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </ScrollView>
