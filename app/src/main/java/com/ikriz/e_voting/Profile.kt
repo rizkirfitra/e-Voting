@@ -48,7 +48,7 @@ class Profile : AppCompatActivity() {
         }
 
         btn_edit.setOnClickListener {
-            startActivity(Intent(this, EditProfile::class.java))
+            startActivity(Intent(this, EditProfile::class.java).putExtra("user", user))
         }
     }
 }

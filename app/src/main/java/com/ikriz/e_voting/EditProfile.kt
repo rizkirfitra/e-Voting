@@ -16,30 +16,29 @@ import kotlinx.android.synthetic.main.edit_profile.*
 
 class EditProfile : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
-    private lateinit var sharedPref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val user = intent.extras?.getString("user", null)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_profile)
+        supportActionBar?.elevation = 0F
         db = Firebase.firestore
-        sharedPref = getSharedPreferences(R.string.PREF_KEY.toString(), Context.MODE_PRIVATE)
-        val user = sharedPref.getString(R.string.USER_KEY.toString(), null)
 
         if (user != null) {
             db.collection("Users").document(user).addSnapshotListener { value, _ ->
-                Log.d("TESS","error")
-                et_nama.editText?.setText(value!!["nama"].toString())
+                Log.d("TESS", "error")
+                et_nama.editText?.apply {
+                    setText(value!!["nama"].toString())
+                    requestFocus()
+                    setSelection(this.text.length)
+                }
                 et_telepon.editText?.setText(value!!["telepon"].toString())
                 et_alamat.editText?.setText(value!!["alamat"].toString())
             }
         }
 
-        btn_cancel.setOnClickListener {
-            finish()
-        }
-        btn_save.setOnClickListener {
-            doSave(user)
-        }
+        btn_cancel.setOnClickListener { finish() }
+        btn_save.setOnClickListener { doSave(user) }
     }
 
     private fun doSave(user: String?) {
@@ -76,11 +75,15 @@ class EditProfile : AppCompatActivity() {
 
         if (user != null) {
             db.collection("Users").document(user).update(
-                hashMapOf("nama" to nama, "telepon" to telepon, "alamat" to alamat) as Map<String, Any>
+                hashMapOf(
+                    "nama" to nama,
+                    "telepon" to telepon,
+                    "alamat" to alamat
+                ) as Map<String, Any>
             ).addOnSuccessListener {
-                Toast.makeText(this,"Berhasil mengubah data",Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Berhasil mengubah data", Toast.LENGTH_LONG).show()
                 finish()
             }
-        } else Toast.makeText(this,"Gagal mengubah data",Toast.LENGTH_LONG).show()
+        } else Toast.makeText(this, "Gagal mengubah data", Toast.LENGTH_LONG).show()
     }
 }

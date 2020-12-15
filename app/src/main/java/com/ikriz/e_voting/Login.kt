@@ -127,7 +127,7 @@ class Login : AppCompatActivity() {
 
     private fun showDialogForget() {
         AlertDialog.Builder(this).apply {
-            setTitle("Lupa token")
+            setTitle("Lupa token?")
             setMessage("Silahkan hubungi RT/RW atau pemerintah setempat")
             setNegativeButton("OK") { dialog, _ ->
                 dialog.cancel()
