@@ -29,10 +29,7 @@ class VotingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        sharedPref = requireActivity().getSharedPreferences(
-            R.string.PREF_KEY.toString(),
-            Context.MODE_PRIVATE
-        )
+        sharedPref = requireActivity().getSharedPreferences(R.string.PREF_KEY.toString(), Context.MODE_PRIVATE)
         val root = inflater.inflate(R.layout.fragment_voting, container, false)
         val user = sharedPref.getString(R.string.USER_KEY.toString(), null)
 
@@ -78,7 +75,7 @@ class VotingFragment : Fragment() {
     }
 
     private fun showConfirmDialog(context: Context, paslon: String, user: String, position: Int) {
-        val dialogBuilder = AlertDialog.Builder(context).apply {
+        val dialog = AlertDialog.Builder(context).apply {
             setTitle("Peringatan!")
             setMessage("Anda hanya dapat melakukan vote satu kali dan tidak dapat mengubahnya. Apakah Anda yakin melakukan vote untuk $paslon?")
             setPositiveButton("Ya") { dialog, which ->
@@ -90,8 +87,7 @@ class VotingFragment : Fragment() {
             setNegativeButton("Batal") { dialog, _ ->
                 dialog.cancel()
             }
-        }
-        val dialog = dialogBuilder.create()
+        }.create()
         dialog.show()
         val btnText = dialog.getButton(AlertDialog.BUTTON_POSITIVE).text
         object : CountDownTimer(10000, 1000) {
@@ -105,11 +101,7 @@ class VotingFragment : Fragment() {
             override fun onTick(millisUntilFinished: Long) {
                 dialog.getButton(AlertDialog.BUTTON_POSITIVE).apply {
                     isEnabled = false
-                    text = String.format(
-                        "%s (%d)",
-                        btnText,
-                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) + 1
-                    )
+                    text = String.format("%s (%d)", btnText, TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) + 1)
                 }
             }
         }.start()

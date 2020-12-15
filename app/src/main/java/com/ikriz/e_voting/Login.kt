@@ -78,7 +78,7 @@ class Login : AppCompatActivity() {
         db.collection("Users").document(nik).get().addOnSuccessListener { doc ->
             if (doc.get("token") != null) {
                 if (doc.get("token") == token) {
-                    with(sharedPref.edit()) {
+                    sharedPref.edit().apply {
                         putString(R.string.USER_KEY.toString(), nik)
                         apply()
                     }

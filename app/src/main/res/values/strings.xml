@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Ayo Vote!</string>
-    <string name="USER_KEY">"USER_NIK"</string>
-    <string name="PREF_KEY">"USER_PREF"</string>
+    <string name="USER_KEY">USER_NIK</string>
+    <string name="PREF_KEY">USER_PREF</string>
 </resources>

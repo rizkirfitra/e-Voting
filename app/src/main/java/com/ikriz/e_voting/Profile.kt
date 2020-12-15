@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -25,11 +26,7 @@ class Profile : AppCompatActivity() {
         val user = sharedPref.getString(R.string.USER_KEY.toString(), null)
         db = Firebase.firestore
 
-        db.collection("Users").document(user!!).addSnapshotListener { value, error ->
-            if (error != null) {
-                Log.w("SNAPSHOT", "listen:error", error)
-                return@addSnapshotListener
-            }
+        db.collection("Users").document(user!!).addSnapshotListener { value, _ ->
             nama.text = value!!.get("nama").toString()
             nik.text = user
             telepon.text = value.get("telepon").toString()
@@ -37,7 +34,7 @@ class Profile : AppCompatActivity() {
         }
 
         btn_logout.setOnClickListener {
-            with(sharedPref.edit()) {
+            sharedPref.edit().apply {
                 putString(R.string.USER_KEY.toString(), null)
                 apply()
             }

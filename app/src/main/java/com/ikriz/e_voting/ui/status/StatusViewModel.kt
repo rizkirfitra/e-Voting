@@ -26,11 +26,7 @@ class StatusViewModel : ViewModel() {
                 }
                 data.clear()
                 for (voice in voices) for (candidate in candidates) if (voice.key == candidate.id) {
-                    data.add(
-                        PieEntry(
-                            voice.value.toFloat(), candidate.get("nama").toString()
-                        )
-                    )
+                    data.add(PieEntry(voice.value.toFloat(), candidate.get("nama").toString()))
                 }
                 listPaslon.value = data
             }

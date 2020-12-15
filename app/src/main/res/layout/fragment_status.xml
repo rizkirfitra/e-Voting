@@ -95,7 +95,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_rincian"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

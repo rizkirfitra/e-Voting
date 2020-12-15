@@ -26,7 +26,6 @@ class EditProfile : AppCompatActivity() {
 
         if (user != null) {
             db.collection("Users").document(user).addSnapshotListener { value, _ ->
-                Log.d("TESS", "error")
                 et_nama.editText?.apply {
                     setText(value!!["nama"].toString())
                     requestFocus()
@@ -75,11 +74,7 @@ class EditProfile : AppCompatActivity() {
 
         if (user != null) {
             db.collection("Users").document(user).update(
-                hashMapOf(
-                    "nama" to nama,
-                    "telepon" to telepon,
-                    "alamat" to alamat
-                ) as Map<String, Any>
+                hashMapOf("nama" to nama, "telepon" to telepon, "alamat" to alamat) as Map<String, Any>
             ).addOnSuccessListener {
                 Toast.makeText(this, "Berhasil mengubah data", Toast.LENGTH_LONG).show()
                 finish()
