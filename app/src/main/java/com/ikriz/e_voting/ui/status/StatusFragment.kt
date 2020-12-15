@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.formatter.PercentFormatter
@@ -42,7 +43,10 @@ class StatusFragment : Fragment() {
             root.recycler_rincian.apply {
                 layoutManager = LinearLayoutManager(requireActivity())
                 adapter = object : RecyclerView.Adapter<MyViewHolder>() {
-                    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+                    override fun onCreateViewHolder(
+                        parent: ViewGroup,
+                        viewType: Int
+                    ): MyViewHolder {
                         return MyViewHolder(inflater, parent)
                     }
 
@@ -69,8 +73,9 @@ class StatusFragment : Fragment() {
                 description.text = "*diperbaharui otomatis"
                 isDrawHoleEnabled = false
                 setTouchEnabled(false)
-                data = pieData
+                legend.isWordWrapEnabled = true
             }
+            pieChart.data = pieData
             pieChart.invalidate()
         })
         return root
